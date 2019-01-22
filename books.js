@@ -5,8 +5,8 @@ formToggle = document.querySelector('#toggle-form');
 bookForm   = document.querySelector('#book-form');
 
 formToggle.addEventListener('click', () => bookForm.classList.toggle('hidden'));
-bookForm.addEventListener('submit', function(e) {
-  e.preventDefault();
+bookForm.addEventListener('submit', function(event) {
+  event.preventDefault();
   submitBook();
 });
 
@@ -69,7 +69,8 @@ function submitBook() {
 let myLibrary = [];
 
 addBookToLibrary('Le Fantastique Totoret', 'Totoret', 5, true);
-addBookToLibrary('Voyage avec Pupe LéPu',   'Pupe',  784, false);
+addBookToLibrary('Voyage avec Pupe LéPu', 'Pupe',  784, false);
+addBookToLibrary('la conjura de los necios', 'toole',  500, true);
 
 console.table(myLibrary);
 myLibrary.forEach(book => console.log(book.info()));
