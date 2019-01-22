@@ -49,11 +49,13 @@ function render() {
 
 function createBookRow(book) {
   row = document.createElement('tr');
+  row.classList.add('book');
   row.setAttribute('data-book-id', myLibrary.indexOf(book));
-  row.appendChild(createBookCell(book.title));
-  row.appendChild(createBookCell(book.author));
-  row.appendChild(createBookCell(book.pages));
-  row.appendChild(createBookCell(book.read));
+  for(let prop in book) {
+    if (book.hasOwnProperty(prop)) {
+      row.appendChild(createBookCell(book[prop]));  
+    }
+  }
   return row;
 }
 
