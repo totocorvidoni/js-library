@@ -1,8 +1,5 @@
-body {
-  background: red;
-}
-body h1 {
-  color: green;
+.hidden {
+  display: none !important;
 }
 
 /*# sourceMappingURL=styles.css.map */

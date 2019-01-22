@@ -5,10 +5,34 @@
   <!-- Normalize -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <h1>My Library</h1>
+  <table id="books-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Pages</th>
+        <th>Read</th>
+      </tr>
+    </thead>
+    <tbody>      
+    </tbody>
+  </table>
+  <button id="toggle-form">New Book</button>
+  <form action="#" id="book-form" class="hidden">
+    <label for="title">Book Title</label>
+    <input type="text" name="title">
+    <label for="author">Author</label>
+    <input type="text" name="author">
+    <label for="pages">Pages</label>
+    <input type="number" name="pages">
+    <label for="read">Read?</label>
+    <input type="radio" name="read" value="true">Yes
+    <input type="radio" name="read" value="false">No
+  </form>
   <script src="books.js"></script>
 </body>
 </html>

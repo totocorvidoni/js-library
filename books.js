@@ -1,3 +1,12 @@
+/* Set Up */
+
+booksTable = document.querySelector('tbody');
+formToggle = document.querySelector('#toggle-form');
+bookForm   = document.querySelector('#book-form');
+
+formToggle.addEventListener('click', () => bookForm.classList.toggle('hidden'));
+
+/* === */
 function Book(title, author, pages, read) {
   this.title  = title,
   this.author = author,
@@ -14,6 +23,34 @@ function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(new Book(title, author, pages, read));
 }
 
+function render() {
+  clearTable();
+  myLibrary.forEach(function(book) {
+    row = createBookRow(book);
+    booksTable.appendChild(row);
+  })
+}
+
+function createBookRow(book) {
+  row = document.createElement('tr');
+  row.classList.add('book')
+  row.appendChild(createBookCell(book.title));
+  row.appendChild(createBookCell(book.author));
+  row.appendChild(createBookCell(book.pages));
+  row.appendChild(createBookCell(book.read));
+  return row;
+}
+
+function createBookCell(content) {
+  cell = document.createElement('td');
+  content = document.createTextNode(content);
+  cell.appendChild(content);
+  return cell;
+}
+
+function clearTable() {
+  booksTable.innerHTML = '';
+}
 /* Tool Code */
 
 let myLibrary = [];
@@ -22,3 +59,6 @@ addBookToLibrary('Le Fantastique Totoret', 'Totoret', 5, true);
 addBookToLibrary('Voyage avec Pupe LéPu',   'Pupe',  784, false);
 
 console.table(myLibrary);
+myLibrary.forEach(book => console.log(book.info()));
+
+render();
