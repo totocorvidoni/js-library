@@ -5,6 +5,10 @@ formToggle = document.querySelector('#toggle-form');
 bookForm   = document.querySelector('#book-form');
 
 formToggle.addEventListener('click', () => bookForm.classList.toggle('hidden'));
+bookForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  submitBook();
+});
 
 /* === */
 function Book(title, author, pages, read) {
@@ -20,7 +24,8 @@ Book.prototype.info = function() {
 }
 
 function addBookToLibrary(title, author, pages, read) {
-  myLibrary.push(new Book(title, author, pages, read));
+  myLibrary.push(new Book(title, author, pages, read))
+  render();
 }
 
 function render() {
@@ -50,6 +55,14 @@ function createBookCell(content) {
 
 function clearTable() {
   booksTable.innerHTML = '';
+}
+
+function submitBook() {
+  addBookToLibrary(bookForm.title.value,
+                   bookForm.author.value,
+                   bookForm.pages.value,
+                   bookForm.read.value);
+  bookForm.reset();
 }
 /* Tool Code */
 
