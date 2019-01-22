@@ -10,8 +10,15 @@ Book.prototype.info = function() {
   return `${this.title} by ${this.author}. Pages: ${this.pages}. ${status}`;
 }
 
-const book1 = new Book('Le Fantastique Totoret', 'Totoret', 5, true);
-const book2 = new Book('Voyage avec Pupe LéPu',   'Pupe',  784, false);
+function addBookToLibrary(title, author, pages, read) {
+  myLibrary.push(new Book(title, author, pages, read));
+}
 
-console.log(book1.info());
-console.log(book2.info());
+/* Tool Code */
+
+let myLibrary = [];
+
+addBookToLibrary('Le Fantastique Totoret', 'Totoret', 5, true);
+addBookToLibrary('Voyage avec Pupe LéPu',   'Pupe',  784, false);
+
+console.table(myLibrary);
