@@ -10,7 +10,8 @@ bookForm.addEventListener('submit', function(event) {
   submitBook();
 });
 
-/* === */
+/* Logic */
+
 function Book(title, author, pages, read) {
   this.title  = title,
   this.author = author,
@@ -28,6 +29,16 @@ function addBookToLibrary(title, author, pages, read) {
   render();
 }
 
+function submitBook() {
+  addBookToLibrary(bookForm.title.value,
+                   bookForm.author.value,
+                   bookForm.pages.value,
+                   bookForm.read.value);
+  bookForm.reset();
+}
+
+/* Layout */
+
 function render() {
   clearTable();
   myLibrary.forEach(function(book) {
@@ -38,7 +49,7 @@ function render() {
 
 function createBookRow(book) {
   row = document.createElement('tr');
-  row.classList.add('book')
+  row.setAttribute('data-book-id', myLibrary.indexOf(book));
   row.appendChild(createBookCell(book.title));
   row.appendChild(createBookCell(book.author));
   row.appendChild(createBookCell(book.pages));
@@ -57,13 +68,6 @@ function clearTable() {
   booksTable.innerHTML = '';
 }
 
-function submitBook() {
-  addBookToLibrary(bookForm.title.value,
-                   bookForm.author.value,
-                   bookForm.pages.value,
-                   bookForm.read.value);
-  bookForm.reset();
-}
 /* Tool Code */
 
 let myLibrary = [];
