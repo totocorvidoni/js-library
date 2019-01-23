@@ -10,6 +10,13 @@ bookForm.addEventListener('submit', function(event) {
   submitBook();
 });
 
+let myLibrary = [];
+
+addBookToLibrary('Le Fantastique Totoret', 'Totoret', 5, true);
+addBookToLibrary('Voyage avec Pupe LéPu', 'Pupe',  784, false);
+addBookToLibrary('la conjura de los necios', 'toole',  500, true);
+console.table(myLibrary);
+
 /* Logic */
 
 function Book(title, author, pages, read) {
@@ -44,7 +51,7 @@ function render() {
   myLibrary.forEach(function(book) {
     row = createBookRow(book);
     booksTable.appendChild(row);
-  })
+  });
 }
 
 function createBookRow(book) {
@@ -56,6 +63,8 @@ function createBookRow(book) {
       row.appendChild(createBookCell(book[prop]));  
     }
   }
+  row.appendChild(createRemoveButton());
+  row.appendChild(createTableButton('read'));
   return row;
 }
 
@@ -70,15 +79,25 @@ function clearTable() {
   booksTable.innerHTML = '';
 }
 
-/* Tool Code */
+function createTableButton(action) {
+  button = document.createElement('button');
+  text = document.createTextNode(action);
+  button.classList.add(action);
+  button.appendChild(text);
+  return button;
+}
 
-let myLibrary = [];
+function createRemoveButton() {
+  button = document.createElement('button');
+  text = document.createTextNode('remove');
+  button.classList.add('remove');
+  button.addEventListener('click', removeBook);
+  button.appendChild(text);
+  return button; 
+}
 
-addBookToLibrary('Le Fantastique Totoret', 'Totoret', 5, true);
-addBookToLibrary('Voyage avec Pupe LéPu', 'Pupe',  784, false);
-addBookToLibrary('la conjura de los necios', 'toole',  500, true);
-
-console.table(myLibrary);
-myLibrary.forEach(book => console.log(book.info()));
-
-render();
+function removeBook() {
+  index = this.parentElement.dataset.bookId;
+  myLibrary.splice(index, 1);
+  render();
+}
