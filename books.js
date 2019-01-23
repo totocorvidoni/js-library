@@ -31,6 +31,10 @@ Book.prototype.info = function() {
   return `${this.title} by ${this.author}. Pages: ${this.pages}. ${status}`;
 }
 
+Book.prototype.readToggle = function() {
+  this.read = !this.read;
+}
+
 function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(new Book(title, author, pages, read))
   render();
@@ -64,7 +68,7 @@ function createBookRow(book) {
     }
   }
   row.appendChild(createRemoveButton());
-  row.appendChild(createTableButton('read'));
+  row.appendChild(createReadButton());
   return row;
 }
 
@@ -79,14 +83,6 @@ function clearTable() {
   booksTable.innerHTML = '';
 }
 
-function createTableButton(action) {
-  button = document.createElement('button');
-  text = document.createTextNode(action);
-  button.classList.add(action);
-  button.appendChild(text);
-  return button;
-}
-
 function createRemoveButton() {
   button = document.createElement('button');
   text = document.createTextNode('remove');
@@ -96,8 +92,24 @@ function createRemoveButton() {
   return button; 
 }
 
+function createReadButton() {
+  button = document.createElement('button');
+  text = document.createTextNode('read');
+  button.classList.add('read');
+  button.addEventListener('click', readBook);
+  button.appendChild(text);
+  return button;
+}
+
 function removeBook() {
   index = this.parentElement.dataset.bookId;
   myLibrary.splice(index, 1);
+  render();
+}
+
+function readBook() {
+  index = this.parentElement.dataset.bookId;
+  book = myLibrary[index];
+  book.readToggle();
   render();
 }
