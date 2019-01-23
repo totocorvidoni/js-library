@@ -10,11 +10,16 @@ bookForm.addEventListener('submit', function(event) {
   submitBook();
 });
 
-let myLibrary = [];
+myLibrary = [];
+if (localStorage.getItem('myLibrary')) {
+  loadLibrary();
+} else {
+  addBookToLibrary('Le Fantastique Totoret', 'Totoret', 5, true);
+  addBookToLibrary('Voyage avec Pupe LéPu', 'Pupe',  784, false);
+  addBookToLibrary('la conjura de los necios', 'toole',  500, true);
+}
+render()
 
-addBookToLibrary('Le Fantastique Totoret', 'Totoret', 5, true);
-addBookToLibrary('Voyage avec Pupe LéPu', 'Pupe',  784, false);
-addBookToLibrary('la conjura de los necios', 'toole',  500, true);
 console.table(myLibrary);
 
 /* Logic */
@@ -37,6 +42,7 @@ Book.prototype.readToggle = function() {
 
 function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(new Book(title, author, pages, read))
+  saveLibrary();
   render();
 }
 
@@ -104,6 +110,7 @@ function createReadButton() {
 function removeBook() {
   index = this.parentElement.dataset.bookId;
   myLibrary.splice(index, 1);
+  saveLibrary();
   render();
 }
 
@@ -111,5 +118,18 @@ function readBook() {
   index = this.parentElement.dataset.bookId;
   book = myLibrary[index];
   book.readToggle();
+  saveLibrary();
   render();
+}
+
+function saveLibrary() {
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+}
+
+// Parses from local storage and makes build new Book objects.
+function loadLibrary() {
+  books = JSON.parse(localStorage.getItem('myLibrary'));
+  books.forEach(function(book) {
+    myLibrary.push(new Book(...Object.values(book)));
+  }) 
 }
