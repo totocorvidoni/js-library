@@ -11,20 +11,30 @@ bookForm.addEventListener('submit', function(event) {
 });
 
 myLibrary = [];
-if (localStorage.getItem('myLibrary')) {
-  loadLibrary();
-} else {
-  addBookToLibrary('Le Fantastique Totoret', 'Totoret', 5, true);
-  addBookToLibrary('Voyage avec Pupe LéPu', 'Pupe',  784, false);
-  addBookToLibrary('la conjura de los necios', 'toole',  500, true);
-}
-render()
-
 console.table(myLibrary);
 
 /* Logic */
 
-function Book(title, author, pages, read) {
+class Book {
+
+  constructor(title, author, pages, read) {
+    this.title  = title;
+    this.author = author;
+    this.pages  = pages;
+    this.read   = read
+  }
+
+  info() {
+    status = (this.read) ? "You have read this book.": "You haven't read this book yet."
+    return `${this.title} by ${this.author}. Pages: ${this.pages}. ${status}`;
+  }
+
+  readToggle() {
+    this.read = !this.read;
+  }
+}
+
+/*function Book(title, author, pages, read) {
   this.title  = title,
   this.author = author,
   this.pages  = pages,
@@ -38,8 +48,7 @@ Book.prototype.info = function() {
 
 Book.prototype.readToggle = function() {
   this.read = !this.read;
-}
-
+}*/
 function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(new Book(title, author, pages, read))
   saveLibrary();
@@ -52,6 +61,33 @@ function submitBook() {
                    bookForm.pages.value,
                    bookForm.read.value);
   bookForm.reset();
+}
+
+function removeBook() {
+  index = this.parentElement.dataset.bookId;
+  myLibrary.splice(index, 1);
+  saveLibrary();
+  render();
+}
+
+function readBook() {
+  index = this.parentElement.dataset.bookId;
+  book = myLibrary[index];
+  book.readToggle();
+  saveLibrary();
+  render();
+}
+
+function saveLibrary() {
+  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+}
+
+// Parses from local storage and makes build new Book objects.
+function loadLibrary() {
+  books = JSON.parse(localStorage.getItem('myLibrary'));
+  books.forEach(function(book) {
+    myLibrary.push(new Book(...Object.values(book)));
+  }) 
 }
 
 /* Layout */
@@ -107,29 +143,13 @@ function createReadButton() {
   return button;
 }
 
-function removeBook() {
-  index = this.parentElement.dataset.bookId;
-  myLibrary.splice(index, 1);
-  saveLibrary();
-  render();
-}
+/*  */
 
-function readBook() {
-  index = this.parentElement.dataset.bookId;
-  book = myLibrary[index];
-  book.readToggle();
-  saveLibrary();
-  render();
+if (localStorage.getItem('myLibrary')) {
+  loadLibrary();
+} else {
+  addBookToLibrary('Le Fantastique Totoret', 'Totoret', 5, true);
+  addBookToLibrary('Voyage avec Pupe LéPu', 'Pupe',  784, false);
+  addBookToLibrary('la conjura de los necios', 'toole',  500, true);
 }
-
-function saveLibrary() {
-  localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
-}
-
-// Parses from local storage and makes build new Book objects.
-function loadLibrary() {
-  books = JSON.parse(localStorage.getItem('myLibrary'));
-  books.forEach(function(book) {
-    myLibrary.push(new Book(...Object.values(book)));
-  }) 
-}
+render()

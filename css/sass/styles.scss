@@ -1,3 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .hidden {
   display: none !important;
+}
+
+%white-box {
+  background: #fff;
+  border-radius: .50em;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  background: linear-gradient(#fbffe9, #e0fff8) fixed;
+  display: grid;
+  justify-content: center;
+  margin-top: 5em;
+}
+
+.wrapper {
+  @extend %white-box
 }
