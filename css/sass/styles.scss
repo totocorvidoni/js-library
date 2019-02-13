@@ -1,3 +1,5 @@
+@import 'normalize';
+
 * {
   margin: 0;
   padding: 0;
@@ -8,19 +10,62 @@
   display: none !important;
 }
 
-%white-box {
-  background: #fff;
-  border-radius: .50em;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+body {
+  // background: linear-gradient(#fbffe9, #e0fff8) fixed;
+  // display: grid;
+  // justify-content: center;
 }
 
-body {
-  background: linear-gradient(#fbffe9, #e0fff8) fixed;
-  display: grid;
-  justify-content: center;
-  margin-top: 5em;
+header {
+  padding: 1em;
+  border-bottom: 10px solid #000;
+  margin-bottom: 1em;
+}
+
+h1 {
+  text-align: end;
 }
 
 .wrapper {
-  @extend %white-box
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+}
+
+#books-table {
+  display: grid;
+  justify-content: center;
+}
+
+tr {
+  display: grid;
+  grid-template-columns: 14rem repeat(3, 7rem) 1fr 1fr;
+  &:nth-child(even) {
+    background: #eee;
+  }
+}
+
+th,
+td {
+  padding: 0.5rem 1rem;
+}
+
+th {
+  font-size: 1.2em;
+  text-align: left;
+  background: #000;
+  color: #fff;
+}
+
+#book-form {
+  display: grid;
+  grid-gap: 0.5em;
+  justify-items: center;
+  padding: 1em;
+  background: #ddd;
+}
+
+label {
+  font-size: 1.2em;
+  font-family: sans-serif;
 }
